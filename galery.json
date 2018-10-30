@@ -1,0 +1,9 @@
+{
+  "imageSrc": ["image/catMini.jpg", "image/jsMini.jpg", "image/mailRuMini.jpg"],
+  "largeImageSrc": ["image/catLarge.jpg", "image/jsLarge.jpg", "image/MailRuLarge.jpg"],
+  "imageTitle": ["cat", "man", "mailRu"],
+  "imageAlt": ["cat", "man", "mailRu"],
+  "imageStructure": ["<div><a><img id='galleryImage' class='image1'></a></div>",
+    "<div><a><img id='galleryImage' class='image2'></a></div>",
+    "<div><a><img id='galleryImage' class='image3'></a></div>"]
+}

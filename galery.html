@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Gallery</title>
+  <link rel="stylesheet" href="style/style.css">
+</head>
+<body>
+<div class="galleryWrapper"></div>
+<script>
+  window.onload = () => {
+
+    fetch('galery.json')
+      .then(result => {
+        console.log(result);
+        return result.json()
+      })
+      .then(data => {
+        console.log(data);
+
+        // строю миниатюрную галлерею
+        for (let i = 0; i < data.imageSrc.length; i++) {
+          // вставляю div c картинкой
+          document.querySelector('.galleryWrapper').innerHTML += data.imageStructure[i];
+          document.querySelectorAll('img')[i].setAttribute('src', data.imageSrc[i]);
+          document.querySelectorAll('img')[i].setAttribute('data-src', data.largeImageSrc[i]);
+        }
+
+        //создаю элементы для отображения большой картинки
+        const divGalleryLarge = document.createElement('div');
+        const leftButton = document.createElement("button");
+        const rightButton = document.createElement("button");
+        const largeImage = new Image;
+        const exitButton = document.createElement("button");
+
+        // добавляю обработчик событий и включая созданные эелементы в DOM
+        document.querySelector('.galleryWrapper').addEventListener('click', (event) => {
+        if (event.target.dataset.src !== undefined){
+
+          divGalleryLarge.classList.add('galleryLarge');
+          const galleryWrapper = document.querySelector('.galleryWrapper');
+          const body = document.querySelector('body');
+          body.insertBefore(divGalleryLarge, galleryWrapper);
+
+          largeImage.setAttribute('src', event.target.dataset.src);
+          largeImage.classList.add('largeImage');
+
+          leftButton.innerText = '<left';
+          leftButton.classList.add('direction');
+
+          divGalleryLarge.appendChild(leftButton);
+          divGalleryLarge.appendChild(largeImage);
+
+          rightButton.innerText = 'right>';
+          rightButton.classList.add('direction');
+
+          divGalleryLarge.appendChild(rightButton);
+
+          divGalleryLarge.appendChild(exitButton);
+          exitButton.classList.add('exit');
+          exitButton.innerText = 'X';
+        }});
+
+        /*добавляю обработчик событий в структуру большой картинки,
+        получилось сделать рабочей только кнопку закрыть - она в левом верхнем углу*/
+        divGalleryLarge.addEventListener('click', (event) => {
+          if (event.target === exitButton) {
+            divGalleryLarge.remove()
+          }
+        })
+
+      })
+      .catch(error => {
+        console.log(error)
+      })
+  }
+</script>
+</body>
+</html>
